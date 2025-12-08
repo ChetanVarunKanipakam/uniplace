@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:url_launcher/url_launcher.dart'; // For opening resume URLs
 import '../../state/candidate_provider.dart';
-import '../../core/constants.dart';
+
 class CandidatesPage extends StatefulWidget {
   final String jobId;
   const CandidatesPage({super.key, required this.jobId});
@@ -99,7 +99,7 @@ class _CandidatesPageState extends State<CandidatesPage> {
                           onPressed: () {
                             final url = student["resumeUrl"];
                             if (url != null && url.isNotEmpty) {
-                              _launchURL(AppConstants.baseUrl.substring(0, AppConstants.baseUrl.length - 4) +url, context);
+                              _launchURL(url, context);
                             } else {
                               ScaffoldMessenger.of(context).showSnackBar(
                                 SnackBar(

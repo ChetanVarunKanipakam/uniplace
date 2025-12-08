@@ -3,7 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:flutter_cached_pdfview/flutter_cached_pdfview.dart';
 import 'package:syncfusion_flutter_pdfviewer/pdfviewer.dart';
-import '../../core/constants.dart';
+
 import '../../state/user_provider.dart';
 import '../widgets/custom_button.dart'; // Import for an upload button
 
@@ -58,7 +58,7 @@ class _ResumeViewerPageState extends State<ResumeViewerPage> {
     }
     
     // Construct the full URL
-    final pdfUrl = AppConstants.baseUrl.substring(0, AppConstants.baseUrl.length - 4) + user["resumeUrl"];
+    final pdfUrl = user["resumeUrl"];
 
     return Scaffold(
       // The main HomePage provides the AppBar

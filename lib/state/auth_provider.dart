@@ -45,7 +45,7 @@ Future<void> login(Map<String, dynamic> data) async {
     if (e.toString().contains('USER_NOT_FOUND')) {
       _error = 'No account found for that email. Please sign up.';
     } else {
-      _error = 'User Not Found';
+      _error = e.toString();
     }
     // Rethrow the error with our user-friendly message so the UI can catch it.
     throw Exception(_error);

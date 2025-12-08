@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import '../../data/models/company_model.dart';
 import '../student/company_jobs_page.dart';
-import '../../core/constants.dart';
+
 class CompanyCard extends StatelessWidget {
   final Company company;
 
@@ -39,7 +39,7 @@ class CompanyCard extends StatelessWidget {
                 ),
                 child: company.photoUrl.isNotEmpty
                     ? Image.network(
-                        AppConstants.baseUrl.substring(0, AppConstants.baseUrl.length - 4) +company.photoUrl,
+                        company.photoUrl,
                         width: double.infinity,
                         height: 160,
                         fit: BoxFit.cover,
