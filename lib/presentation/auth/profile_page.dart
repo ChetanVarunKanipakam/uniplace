@@ -161,20 +161,20 @@ class _ProfilePageState extends State<ProfilePage> {
                         padding: const EdgeInsets.symmetric(horizontal: 20),
                         child: Column(
                           children: [
-                            CustomButton(
-                              text: "Upload / Update Resume",
-                              onPressed: () =>
-                                  _pickAndUploadResume(userProvider),
-                              icon: Icons.upload_file,
-                            ),
-                            const SizedBox(height: 14),
+                            if (user["role"] == "student") ...[
+                              CustomButton(
+                                text: "Upload / Update Resume",
+                                onPressed: () => _pickAndUploadResume(userProvider),
+                                icon: Icons.upload_file,
+                              ),
+                              const SizedBox(height: 14),
+                            ],
                             CustomButton(
                               text: "Logout",
                               onPressed: () {
                                 authProvider.logout();
                                 userProvider.clearProfile();
-                                Navigator.pushReplacementNamed(
-                                    context, AppRoutes.login);
+                                Navigator.pushReplacementNamed(context, AppRoutes.login);
                               },
                               isPrimary: false,
                               icon: Icons.logout,
@@ -182,6 +182,7 @@ class _ProfilePageState extends State<ProfilePage> {
                           ],
                         ),
                       ),
+
                       const SizedBox(height: 30),
                     ],
                   ),

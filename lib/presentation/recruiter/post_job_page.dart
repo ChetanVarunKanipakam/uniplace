@@ -2,8 +2,8 @@ import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import '../../state/job_provider.dart';
 import '../../state/user_provider.dart';
-import '../widgets/custom_button.dart'; // Ensure CustomButton is imported
-import '../widgets/custom_textfield.dart'; // Ensure CustomTextField is imported
+import '../widgets/custom_textfield.dart';
+import '../../data/models/job_model.dart'; // Ensure CustomTextField is imported
 import 'package:intl/intl.dart';
 class PostJobPage extends StatefulWidget {
   const PostJobPage({super.key});
@@ -291,23 +291,18 @@ class _PostJobPageState extends State<PostJobPage> {
                               Text("Deadline: ${DateFormat('yyyy-MM-dd').format(job.deadline!)}", style: theme.textTheme.bodySmall),
                           ],
                         ),
-                        trailing: IconButton(
-                          icon: Icon(Icons.delete_forever, color: theme.colorScheme.error),
-                          onPressed: () async {
-                            // TODO: Implement delete job confirmation dialog
-                            // await jobProvider.deleteJob(job["_id"], companyId); // Assuming _id is available
-                            if (!mounted) return;
-                            ScaffoldMessenger.of(context).showSnackBar(
-                              SnackBar(content: Text("Job deleted.", style: theme.textTheme.labelLarge), backgroundColor: theme.primaryColor),
-                            );
-                          },
-                        ),
-                        onTap: () {
-                          // TODO: Implement job details/edit page for recruiter
-                          ScaffoldMessenger.of(context).showSnackBar(
-                            SnackBar(content: Text("Tapped job: ${job.role}", style: theme.textTheme.labelLarge), backgroundColor: theme.primaryColor),
-                          );
-                        },
+                        // trailing: IconButton(
+                        //   icon: Icon(Icons.delete_forever, color: theme.colorScheme.error),
+                        //   onPressed: () async {
+                        //     // TODO: Implement delete job confirmation dialog
+                        //     // await jobProvider.deleteJob(job["_id"], companyId); // Assuming _id is available
+                        //     if (!mounted) return;
+                        //     ScaffoldMessenger.of(context).showSnackBar(
+                        //       SnackBar(content: Text("Job deleted.", style: theme.textTheme.labelLarge), backgroundColor: theme.primaryColor),
+                        //     );
+                        //   },
+                        // ),
+                        onTap:  () => _showJobDetailsDialog(context, job)
                       ),
                     );
                   },
@@ -318,6 +313,54 @@ class _PostJobPageState extends State<PostJobPage> {
         label: const Text("Post New Job"),
         backgroundColor: theme.primaryColor,
         foregroundColor: Colors.white,
+      ),
+    );
+  }
+   void _showJobDetailsDialog(BuildContext context, Job job) {
+    final theme = Theme.of(context);
+    showDialog(
+      context: context,
+      builder: (_) => AlertDialog(
+        shape: theme.dialogTheme.shape,
+        backgroundColor: theme.dialogTheme.backgroundColor,
+        title: Text(job.role, style: theme.dialogTheme.titleTextStyle),
+        content: SingleChildScrollView(
+          child: ListBody(
+            children: <Widget>[
+              _buildDetailRow(theme, Icons.business_center, "Package", job.package),
+              _buildDetailRow(theme, Icons.score, "Min CGPA", job.eligibility.cgpa.toString()),
+              _buildDetailRow(theme, Icons.group_work, "Branches", job.eligibility.branches.join(", ")),
+              if (job.deadline != null)
+                _buildDetailRow(theme, Icons.timer_off, "Deadline", DateFormat.yMMMd().format(job.deadline!)),
+              const Divider(height: 24),
+              Text("Description", style: theme.textTheme.titleSmall),
+              const SizedBox(height: 4),
+              Text(job.description, style: theme.textTheme.bodyMedium),
+              const SizedBox(height: 12),
+              Text("Skills Required", style: theme.textTheme.titleSmall),
+              const SizedBox(height: 4),
+              Text(job.skillsRequired.join(", "), style: theme.textTheme.bodyMedium),
+            ],
+          ),
+        ),
+        actions: [
+          TextButton(onPressed: () => Navigator.pop(context), child: const Text("Close")),
+        ],
+      ),
+    );
+  }
+
+  Widget _buildDetailRow(ThemeData theme, IconData icon, String label, String value) {
+    return Padding(
+      padding: const EdgeInsets.symmetric(vertical: 4.0),
+      child: Row(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: [
+          Icon(icon, size: 18, color: theme.primaryColor),
+          const SizedBox(width: 8),
+          Expanded(child: Text("$label: ", style: theme.textTheme.bodyLarge?.copyWith(fontWeight: FontWeight.bold))),
+          Expanded(child: Text(value, style: theme.textTheme.bodyLarge)),
+        ],
       ),
     );
   }
