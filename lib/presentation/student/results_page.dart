@@ -26,7 +26,7 @@ class _ResultsPageState extends State<ResultsPage> {
     final theme = Theme.of(context);
     final resultProvider = Provider.of<ResultProvider>(context);
     final result = resultProvider.result;
-    print(result);
+    // print(result);
     return Scaffold(
       appBar: AppBar(
         title: Text("Placement Results", style: theme.appBarTheme.titleTextStyle),

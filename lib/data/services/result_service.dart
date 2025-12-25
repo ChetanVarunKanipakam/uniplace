@@ -9,9 +9,9 @@ class ResultService {
   }
 
   Future<Map<String, dynamic>> fetchResultsForStudents(String token) async {
-    print(token);
+    // print(token);
     final response = await _api.dio.get("/results/selects",options: Options(headers: {"Authorization": "Bearer $token"}),);
-    print(response);
+    // print(response);
     return Map<String, dynamic>.from(response.data);
   }
 

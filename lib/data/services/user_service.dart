@@ -9,9 +9,9 @@ class UserService {
   }
 
   Future<Map<String, dynamic>> login(Map<String, dynamic> data) async {
-    print(data);
+    // print(data);
     final response = await _api.dio.post("/auth/login", data: data);
-    print("user response $response");
+    // print("user response $response");
     return Map<String, dynamic>.from(response.data);
   }
 

@@ -9,7 +9,7 @@ class JobService {
   }
 
   Future<List<Job>> fetchJobs(String companyId) async {
-    print(companyId);
+    // print(companyId);
     final response = await _api.dio.get("/jobs/$companyId");
     return (response.data as List).map((json) => Job.fromJson(json)).toList();
   }

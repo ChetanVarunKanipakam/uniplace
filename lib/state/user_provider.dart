@@ -18,12 +18,12 @@ class UserProvider extends ChangeNotifier {
     if (token == null) {
       throw Exception("User not authenticated");
     }
-    print(token);
+    // print(token);
     notifyListeners();
     try {
       _profile = await _repo.getProfile(token);
     } catch (e) {
-      print(e);
+      // print(e);
       _profile = null;
     }
     _loading = false;
